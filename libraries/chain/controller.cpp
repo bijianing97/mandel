@@ -166,6 +166,17 @@ struct pending_state {
       return std::get<assembled_block>(_block_stage)._pending_block_header_state;
    }
 
+   const deque<transaction_receipt> &get_trx_receipts() const
+   {
+      if (std::holds_alternative<building_block>(_block_stage))
+         return std::get<building_block>(_block_stage)._pending_trx_receipts;
+
+      if (std::holds_alternative<assembled_block>(_block_stage))
+         return std::get<assembled_block>(_block_stage)._unsigned_block->transactions;
+
+      return std::get<completed_block>(_block_stage)._block_state->block->transactions;
+   }
+   
    deque<transaction_metadata_ptr> extract_trx_metas() {
       if( std::holds_alternative<building_block>(_block_stage) )
          return std::move( std::get<building_block>(_block_stage)._pending_trx_metas );
