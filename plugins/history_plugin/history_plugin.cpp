@@ -500,8 +500,8 @@ namespace eosio {
                             fc::mutable_variant_object r("receipt", receipt);
                             fc::variant v = chain.to_variant_with_abi(pt.get_transaction(), abi_serializer::create_yield_function( abi_serializer_max_time ));
                             fc::mutable_variant_object tmp(v.get_object());
-                            const auto *sigs = pt.get_signed_transaction().signatures();
-                            tmp("signatures", sigs != nullptr ? *sigs : vector<signature_type>());
+                            const auto& sigs = pt.get_signed_transaction().signatures;
+                            tmp("signatures", sigs);
                             const auto *context_free_data = pt.get_signed_transaction().context_free_data();
                             tmp("context_free_data", context_free_data != nullptr ? *context_free_data : vector<bytes>());
                             r("trx", std::move(tmp) );
@@ -534,8 +534,8 @@ namespace eosio {
                         fc::mutable_variant_object r("receipt", receipt);
                         fc::variant v = chain.to_variant_with_abi(pt.get_transaction(), abi_serializer::create_yield_function( abi_serializer_max_time ));
                         fc::mutable_variant_object tmp(v.get_object());
-                        const auto *sigs = pt.get_signed_transaction().signatures();
-                        tmp("signatures", sigs != nullptr ? *sigs : vector<signature_type>());
+                        const auto &sigs = pt.get_signed_transaction().signatures();
+                        tmp("signatures", sigs);
                         const auto *context_free_data = pt.get_signed_transaction().context_free_data();
                         tmp("context_free_data", context_free_data != nullptr ? *context_free_data : vector<bytes>());
                         r("trx", std::move(tmp) );
